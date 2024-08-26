@@ -190,13 +190,13 @@ def gen_interp_video(G, outdir: str, seeds, shuffle_seed=None, w_frames=60*4, ki
         else:
             edit_d = 1.5 * (w_1 - w_2).to(device)
 
-        # print(edit_d)
-
         if edit_shape:
             w_pivot[:, 3:5, :] += edit_d[:, 3:5, :]
-        elif edit_exp:
+        
+        if edit_exp:
             w_pivot[:, 6:7, :] += edit_d[:, 6:7, :]
-        else:
+        
+        if not edit_shape and not edit_exp:
             w_pivot += edit_d
 
         triplanes_1 = G.backbone.synthesis(ws=w_pivot)
